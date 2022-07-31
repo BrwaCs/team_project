@@ -1,20 +1,18 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-import 'Register.dart';
-import 'message.dart';
-
-class SignIn extends StatefulWidget {
-  const SignIn({Key? key}) : super(key: key);
+class Register extends StatefulWidget {
+  const Register({Key? key}) : super(key: key);
 
   @override
-  State<SignIn> createState() => _SignInState();
+  State<Register> createState() => _RegisterState();
 }
 
-class _SignInState extends State<SignIn> {
-  late String _email, _password;
+class _RegisterState extends State<Register> {
+  late String _password, _email, _name, _phone;
   final auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
@@ -29,14 +27,28 @@ class _SignInState extends State<SignIn> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Login"),
+                    Text("Register"),
                     SizedBox(
                       height: 25,
                     ),
                     TextFormField(
                       onChanged: (value) {
                         setState(() {
-                          _email = value;
+                          _name = value.toString();
+                        });
+                      },
+                      decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.person),
+                          border: OutlineInputBorder(),
+                          label: Text("Name")),
+                    ),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    TextFormField(
+                      onChanged: (value) {
+                        setState(() {
+                          _email = value.toString();
                         });
                       },
                       decoration: InputDecoration(
@@ -62,25 +74,40 @@ class _SignInState extends State<SignIn> {
                     SizedBox(
                       height: 25,
                     ),
+                    TextFormField(
+                      onChanged: (value) {
+                        setState(() {
+                          _phone = value;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.phone),
+                        border: OutlineInputBorder(),
+                        label: Text("Phone"),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 25,
+                    ),
                     GestureDetector(
                       onTap: () {
-                        auth
-                            .signInWithEmailAndPassword(
-                                email: _email, password: _password)
-                            .then((value) => Navigator.pushReplacement(context,
-                                    MaterialPageRoute(builder: (context) {
-                                  return Message();
-                                })))
-                            .catchError((error) => showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return Text(error.toString());
-                                }));
+                        // auth
+                        //     .createUserWithEmailAndPassword(
+                        //         email: _email, password: _password)
+                        //     .then((value) => FirebaseFirestore.instance
+                        //         .collection('users')
+                        //         .doc(value.user?.uid)
+                        //         .set(SocialUser(
+                        //                 name: _name,
+                        //                 email: _email,
+                        //                 phone: _phone,
+                        //                 uid: value.user?.uid)
+                        //             .toMap()));
                       },
                       child: Container(
                         child: Center(
                             child: Text(
-                          "Login",
+                          "Sign-Up",
                           style: TextStyle(color: Colors.white, fontSize: 20),
                         )),
                         color: Color.fromRGBO(0, 10, 141, 1),
@@ -91,25 +118,6 @@ class _SignInState extends State<SignIn> {
                     SizedBox(
                       height: 25,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "don't have an account? ",
-                          style:
-                              TextStyle(color: Colors.grey[700], fontSize: 20),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return Register();
-                            }));
-                          },
-                          child: Text("Register"),
-                        )
-                      ],
-                    )
                   ],
                 ),
               ),
