@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:team_project/login.dart';
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
@@ -91,18 +92,14 @@ class _RegisterState extends State<Register> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        // auth
-                        //     .createUserWithEmailAndPassword(
-                        //         email: _email, password: _password)
-                        //     .then((value) => FirebaseFirestore.instance
-                        //         .collection('users')
-                        //         .doc(value.user?.uid)
-                        //         .set(SocialUser(
-                        //                 name: _name,
-                        //                 email: _email,
-                        //                 phone: _phone,
-                        //                 uid: value.user?.uid)
-                        //             .toMap()));
+                        auth
+                            .createUserWithEmailAndPassword(
+                                email: _email, password: _password)
+                            .then((value) => Navigator.push(context,
+                                MaterialPageRoute(builder: (ctx) => SignIn())))
+                            .catchError((error) {
+                          print(error);
+                        });
                       },
                       child: Container(
                         child: Center(

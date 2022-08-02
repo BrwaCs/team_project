@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:team_project/createProfile.dart';
 
 import 'Register.dart';
 import 'message.dart';
@@ -29,7 +30,10 @@ class _SignInState extends State<SignIn> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Login"),
+                    Text("Login",
+                        style: TextStyle(
+                            fontSize: 30,
+                            color: Color.fromRGBO(0, 10, 141, 1))),
                     SizedBox(
                       height: 25,
                     ),
@@ -69,7 +73,7 @@ class _SignInState extends State<SignIn> {
                                 email: _email, password: _password)
                             .then((value) => Navigator.pushReplacement(context,
                                     MaterialPageRoute(builder: (context) {
-                                  return Message();
+                                  return Profile();
                                 })))
                             .catchError((error) => showDialog(
                                 context: context,
@@ -106,7 +110,10 @@ class _SignInState extends State<SignIn> {
                               return Register();
                             }));
                           },
-                          child: Text("Register"),
+                          child: Text("Register",
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: Color.fromRGBO(0, 10, 141, 1))),
                         )
                       ],
                     )
